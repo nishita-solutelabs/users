@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 import 'package:users/networking.dart';
 import 'package:users/user/user.dart';
 
@@ -17,13 +18,17 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
+  var box = Hive.box('userBox');
+
   void addBookMark(User user) {
     bookmarkList.add(user);
+    box.add(user);
     notifyListeners();
   }
 
   void removeBookMark(User user) {
     bookmarkList.remove(user);
+    box.delete(user);
     notifyListeners();
   }
 
