@@ -30,4 +30,9 @@ class UserData extends ChangeNotifier {
   bool isBookMarked(User user) {
     return bookmarkList.contains(user);
   }
+
+  void clearData() {
+    bookmarkList.clear();
+    notifyListeners();
+  }
 }
