@@ -9,6 +9,12 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<UserData>(context, listen: false).getdata();
+  }
+
+  @override
   Widget build(BuildContext context) {
     UserData provider = Provider.of<UserData>(context);
     return Padding(
