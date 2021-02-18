@@ -38,10 +38,21 @@ class _UserScreenState extends State<UserScreen> {
                 ),
               ),
               trailing: Icon(
-                Icons.star_border,
+                provider.isBookMarked(provider.userList[index])
+                    ? Icons.star_border
+                    : Icons.star_border,
                 size: 30.0,
+                color: provider.isBookMarked(provider.userList[index])
+                    ? Colors.yellow
+                    : null,
               ),
-              onTap: () {},
+              onTap: () {
+                if (provider.isBookMarked(provider.userList[index])) {
+                  provider.removeBookMark(provider.userList[index]);
+                } else {
+                  provider.addBookMark(provider.userList[index]);
+                }
+              },
             ),
           ));
         },
