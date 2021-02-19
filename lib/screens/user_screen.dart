@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:users/user/userdata.dart';
+import 'package:users/user/userhive.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -17,6 +19,8 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     UserData provider = Provider.of<UserData>(context);
+    final box = Hive.box('userBox');
+
     return RefreshIndicator(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -39,20 +43,15 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                 ),
                 trailing: Icon(
-                  provider.isBookMarked(provider.userList[index])
-                      ? Icons.star_border
-                      : Icons.star_border,
+                  Icons.star_border,
                   size: 30.0,
-                  color: provider.isBookMarked(provider.userList[index])
-                      ? Colors.yellow
-                      : null,
+                  color: provider.marked(index) ? Colors.yellow : null,
                 ),
                 onTap: () {
-                  if (provider.isBookMarked(provider.userList[index])) {
-                    provider.removeBookMark(provider.userList[index]);
-                  } else {
-                    provider.addBookMark(provider.userList[index]);
-                  }
+                  final name1 = provider.userList[index].login;
+                  final url1 = provider.userList[index].avatarUrl;
+                  box.add(UserHive(name1, url1));
+                  provider.marked(index);
                 },
               ),
             ));

@@ -5,7 +5,7 @@ import 'package:users/user/user.dart';
 
 class UserData extends ChangeNotifier {
   List<User> userList = [];
-  List<User> bookmarkList = [];
+
   List userJsonData;
 
   void getdata() async {
@@ -20,24 +20,13 @@ class UserData extends ChangeNotifier {
 
   var box = Hive.box('userBox');
 
-  void addBookMark(User user) {
-    bookmarkList.add(user);
-    box.add(user);
+  bool marked(int index) {
     notifyListeners();
-  }
-
-  void removeBookMark(User user) {
-    bookmarkList.remove(user);
-    box.delete(user);
-    notifyListeners();
-  }
-
-  bool isBookMarked(User user) {
-    return bookmarkList.contains(user);
+    return box.containsKey(index);
   }
 
   void clearData() {
-    bookmarkList.clear();
+    box.clear();
     notifyListeners();
   }
 }
